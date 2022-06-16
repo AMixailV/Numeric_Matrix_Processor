@@ -15,31 +15,45 @@ class Matrix(val n: Int, val m: Int, val matrix: MutableList<MutableList<Int>>) 
             return Matrix(n, m, matrix)
         }
 
-        fun sum(matrix_1: Matrix, matrix_2: Matrix) {
-            if (!isError(matrix_1, matrix_2)) {
+        fun sum(matrixA: Matrix, matrixB: Matrix) {
+            if (!isError(matrixA, matrixB)) {
                 val resultMatrix: MutableList<MutableList<Int>> = mutableListOf()
 
-
-                for (i in 0 until matrix_1.n) {
+                for (i in 0 until matrixA.n) {
                     val resultRow: MutableList<Int> = mutableListOf()
-                    for (j in 0 until matrix_1.m) {
-                        resultRow.add(matrix_1.matrix[i][j] + matrix_2.matrix[i][j])
+                    for (j in 0 until matrixA.m) {
+                        resultRow.add(matrixA.matrix[i][j] + matrixB.matrix[i][j])
                     }
                     resultMatrix.add(resultRow)
                 }
-                resultMatrix.forEach {
-                    print(it.joinToString(" "))
-                    println()
-                }
+                printMatrix(resultMatrix)
             }
         }
 
-        private fun isError(matrix_1: Matrix, matrix_2: Matrix): Boolean {
-            return if (matrix_1.n != matrix_2.n || matrix_1.m != matrix_2.m) {
+        private fun isError(matrixA: Matrix, matrixB: Matrix): Boolean {
+            return if (matrixA.n != matrixB.n || matrixA.m != matrixB.m) {
                 println(Message.ERROR.message)
                 true
             } else {
                 false
+            }
+        }
+
+        fun multiply(matrix: Matrix) {
+            val C = readln().toInt()
+
+            for (i in 0 until matrix.n) {
+                for (j in 0 until matrix.m) {
+                    matrix.matrix[i][j] *= C
+                }
+            }
+            printMatrix(matrix.matrix)
+        }
+
+        private fun printMatrix(matrix: MutableList<MutableList<Int>>) {
+            matrix.forEach {
+                print(it.joinToString(" "))
+                println()
             }
         }
     }
